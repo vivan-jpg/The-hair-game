@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Customer Feedback</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      background: #f9f9f9;
+    }
+    .form-section {
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      max-width: 600px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      display: none;
+    }
+    .form-section.active {
+      display: block;
+    }
+    h2 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+    .question {
+      margin-bottom: 20px;
+    }
+    .options input {
+      margin-right: 10px;
+    }
+    .btn {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background-color: #0056b3;
+    }
+    .success {
+      text-align: center;
+      color: green;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Step 1 -->
+  <form id="step1" class="form-section active">
+    <h2>Share your experience with us</h2>
+
+    <div class="question">
+      <label>How was your overall experience?</label><br><br>
+      <div class="options">
+        <input type="radio" name="experience" value="sad"> 😔 I had a bad experience<br>
+        <input type="radio" name="experience" value="okay"> 🙂 It was okay, could be better<br>
+        <input type="radio" name="experience" value="good"> 😊 It was good<br>
+        <input type="radio" name="experience" value="loved"> 😍 I loved it<br>
+        <input type="radio" name="experience" value="five"> ⭐ I'd give it five stars<br>
+      </div>
+    </div>
+
+    <button type="submit" class="btn">Next</button>
+  </form>
+
+  <!-- Step 2 -->
+  <form id="step2" class="form-section">
+    <h2 style="color: #cc0000;">We’re sorry your experience wasn't great</h2>
+    <p>Please help us improve by sharing what went wrong. We are listening.</p>
+
+    <div class="question">
+      <label>Select the area(s) that were disappointing:</label><br><br>
+      <div class="options">
+        <input type="checkbox" name="issue" value="haircut"> Haircut or Hairstyle<br>
+        <input type="checkbox" name="issue" value="facial"> Facial or Skincare Service<br>
+        <input type="checkbox" name="issue" value="cleanliness"> Cleanliness<br>
+        <input type="checkbox" name="issue" value="staff"> Staff Behavior<br>
+        <input type="checkbox" name="issue" value="wait"> Waiting Time<br>
+        <input type="checkbox" name="issue" value="pricing"> Pricing<br>
+        <input type="checkbox" name="issue" value="other"> Other<br>
+      </div>
+    </div>
+
+    <button type="submit" class="btn">Submit Feedback</button>
+  </form>
+
+  <!-- Final message -->
+  <div id="thankyou" class="form-section">
+    <h2 class="success">✅ Thank you for your feedback!</h2>
+  </div>
+
+  <script>
+    const step1Form = document.getElementById("step1");
+    const step2Form = document.getElementById("step2");
+    const thankyouPage = document.getElementById("thankyou");
+
+    const googleReviewURL = "https://g.co/kgs/Pk9x7eP"; // Your review page link
+
+    step1Form.addEventListener("submit", function(e) {
+      e.preventDefault();
+      const selected = document.querySelector('input[name="experience"]:checked');
+      if (!selected) {
+        alert("Please select an option.");
+        return;
+      }
+
+      const value = selected.value;
+
+      if (value === "five") {
+        // Redirect to your Google review page
+        window.location.href = googleReviewURL;
+      } else {
+        // Go to second form page
+        step1Form.classList.remove("active");
+        step2Form.classList.add("active");
+      }
+    });
+
+    step2Form.addEventListener("submit", function(e) {
+      e.preventDefault();
+      step2Form.classList.remove("active");
+      thankyouPage.classList.add("active");
+    });
+  </script>
+
+</body>
+</html>
